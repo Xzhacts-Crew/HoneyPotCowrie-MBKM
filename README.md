@@ -21,5 +21,30 @@ Berikut adalah beberapa poin utama tentang Cowrie SSH honeypot:
 ```sh
 cek 123
 ```
+# 2. INSTALLASI COWRIE HONEYPOT SSH
+### 2.1 Install Dependency
+```sh
+apt-get install git python3-virtualenv libssl-dev libffi-dev build-essential libpython3-dev python3-minimal authbind virtualenv
+```
+### 2.2 Create a user account
+```sh
+sudo adduser --disabled-password cowrie
+```
+### 2.3 Checkout the code
+```sh
+git clone http://github.com/cowrie/cowrie
+```
+### 2.4 Setup Virtual Environment
+```sh
+python -m venv cowrie-env
+```
+### 2.5 Starting Cowrie
+```sh
+bin/cowrie start
+```
+Setelah Run, Untuk melihat log dari aktifitas honeypotnya bisa dengan command :
+```sh
+tail -f var/log/cowrie/cowrie.log
+```
 
 
