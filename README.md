@@ -16,4 +16,10 @@ Berikut adalah beberapa poin utama tentang Cowrie SSH honeypot:
 ### TOPOLOGI JARINGAN
 ![alt text](https://github.com/Xzhacts-Crew/HoneyPotCowrie-MBKM/blob/main/Topologi%20spj.png?raw=true)
 
+# 1. KONFIGURASI JARINGAN VM
+### 1.1 MENGECEK IP INTERFACES
+```sh
+cek 123
+```
+
 
