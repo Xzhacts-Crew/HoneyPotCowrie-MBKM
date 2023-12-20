@@ -38,11 +38,15 @@ git clone http://github.com/cowrie/cowrie
 ```sh
 python -m venv cowrie-env
 ```
-### 2.5 Starting Cowrie
+### 2.5 activate virtual environment
+```sh
+source cowrie-env/bin/activate
+```
+### 2.6 Starting Cowrie
 ```sh
 bin/cowrie start
 ```
-Setelah Run, Untuk melihat log dari aktifitas honeypotnya bisa dengan command :
+Setelah Run, Untuk melihat log dari aktifitas honeypotnya secara real time bisa dengan command :
 ```sh
 tail -f var/log/cowrie/cowrie.log
 ```
