@@ -18,13 +18,44 @@ Berikut adalah beberapa poin utama tentang Cowrie SSH honeypot:
 
 # 1. KONFIGURASI JARINGAN VM
 ### 1.1 MENGECEK IP INTERFACES
+pertama tama cek terlebih dahulu ip address dari kedua interfaces dengan command
 ```sh
-cek 123
+ip addr
+```
+### 1.2 MENGECEK IP INTERFACES
+setelah itu kalian pergi ke bagian config jaringan dengan command
+```sh
+nano /etc/network/interfaces
+```
+tambahkan konfigurasinya sebagai berikut
+```sh
+auto enp0s8
+iface enp0s8 inet static
+address 200.0.0.1/24
+```
+### 1.3 RESTART JARINGAN VM
+agar komfigurasi bisa berjalan perlu di restart jaringan vm dengan command
+```sh
+/etc/init.d/networking restart
 ```
 # 2. KONFIGURASI SSH
-### 2.1 test
+### 2.1 INSTALL SSH
+untuk menginstall ssh pada vm ketikan command
 ```sh
-cek 123
+apt install openssh-server -y
+```
+### 2.2 KONFIGURASI FILE SSH
+untuk mengkonfigurasi ssh terlebih dahulu kita masuk ke foldernya yaitu
+```sh
+nano /etc/ssh/sshd_config
+```
+setelah terbuka, ubahah port yang awalnya 22 menjadi 7878
+```sh
+port 7878
+```
+setelah itu coba test koneksi ssh nya dengan menggunakan command
+```sh
+ssh amikomspj@200.0.0.1 -p 7878
 ```
 # 3. INSTALLASI COWRIE HONEYPOT SSH
 ### 3.1 Install Dependency
