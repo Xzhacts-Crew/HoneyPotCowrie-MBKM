@@ -21,6 +21,11 @@ Berikut adalah beberapa poin utama tentang Cowrie SSH honeypot:
 ```sh
 cek 123
 ```
+# 2. KONFIGURASI SSH
+### 2.1 test
+```sh
+cek 123
+```
 # 3. INSTALLASI COWRIE HONEYPOT SSH
 ### 3.1 Install Dependency
 ```sh
