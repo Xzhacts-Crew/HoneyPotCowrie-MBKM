@@ -2,6 +2,7 @@
 LIST NAMA ANGGOTA KELOMPOK
 - Mohamad Farhan Palilati 23.66.0020 (Ketua) - System Security Administrator
 - Siti Marwa 23.66.0024 (Anggota) - Network Administrator
+- Moh Wahyu A.Saini 23.66.0034 (Anggota) - Konfigurasi DNS Server
 
 Cowrie adalah salah satu proyek open-source yang bertujuan untuk meniru layanan Secure Shell (SSH) dan bertindak sebagai honeypot. Honeypot adalah sistem atau perangkat lunak yang dirancang untuk menarik dan menangkap serangan siber dengan cara meniru sebagai target yang mudah diserang. Cowrie digunakan khusus untuk menarik serangan terhadap layanan SSH.
 
@@ -86,3 +87,78 @@ Setelah Run, Untuk melihat log dari aktifitas honeypotnya secara real time bisa 
 ```sh
 tail -f var/log/cowrie/cowrie.log
 ```
+# 4. KONFIGURASI DNS SERVER
+Ada dua domain yang akan dibuat yaitu:
+www.amikomspj.com
+www.dilarang.net
+Dua domain ini berada dalam satu ip yaitu ip 200.0.0.1 ip server dan nantinya pada saat pengujian bisa ping pada komputer fisik kepada dua domain ini
+baik itu adalah topologi yang akan dibangun atau jaringan yang akan dibangun,selanjutnya menginstall paket DNS Server yang bernama bind9 dan untuk melakukan pengujian memerlukan sebuah paket yang bernama dnsutils untuk melakukan nslookup 
+Untuk mengkonfigurasi dns kita masuk di vm jika sudah berjalan langsung saja kita masuk sebagai root lalu minimaze dan buka cmd untuk melakukan konfigurasi via ssh lalu ketik ssh amikomspj@200.0.0.1 -p 7878 lalu masukan password
+### 4.1 Install paket dns server bind9 dan dnsutils
+```sh
+apt install bind9 dnsutils -y
+```
+### 4.2 Edit file konfigurasi lalu masuk di file/folder konfigurasi 
+```sh
+cd /etc/bind
+```
+lalu ketik ls
+```sh
+ls
+```
+### 4.3 Edit file named.conf.local
+```sh
+nano.named.conf.local
+```
+### 4.4 Gandakan file db.local dan db.127
+Jadi ini memerlukan tiga file db yaitu db.amikomspj,db.dilarang,db.200
+```sh
+cp db.local db.amikomspj
+cp db.local db.dilarang
+cp db.127 db.200
+Enter lalu ketik
+``
+```sh
+ls
+```
+### 4.5 Edit tiga file konfigurasi utama yaitu db.200,db.amikomspj,db.dilarang
+```sh
+nano db.200
+nano db.amikomspj
+nano db.dilarang
+```
+### 4.6 Edit file name server
+```sh
+nano /etc/resolv.conf
+```
+lalu ketik
+```sh
+nameserver 200.0.0.1
+```
+seluruh file konfigurasi di edit sekarang reserv service
+### 4.7 Reserv service
+```sh
+systemctl restart bind9
+```
+```sh
+Enter
+```
+### 4.8 Cek nslookup yang sudah dibuat
+```sh
+nslookup 200.0.0.1
+nslookup www.amikomspj.com
+nslookup www.dilarang.net
+```
+### 4.9 Pengujian atau ping
+buka cmd di tab baru
+lalu ping server
+```sh
+ping 200.0.0.1
+```
+lalu ping domain
+```sh
+ping www.amikomspj.com
+ping www.dilarang.net
+``` 
+
+
