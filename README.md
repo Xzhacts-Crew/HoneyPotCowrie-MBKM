@@ -87,6 +87,3 @@ Setelah Run, Untuk melihat log dari aktifitas honeypotnya secara real time bisa 
 tail -f var/log/cowrie/cowrie.log
 ```
 
-test
-
-
