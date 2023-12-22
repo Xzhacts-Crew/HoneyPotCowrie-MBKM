@@ -3,6 +3,7 @@ LIST NAMA ANGGOTA KELOMPOK
 - Mohamad Farhan Palilati 23.66.0020 (Ketua) - System Security Administrator
 - Siti Marwa 23.66.0024 (Anggota) - Network Administrator
 - Moh Wahyu A.Saini 23.66.0034 (Anggota) - Konfigurasi DNS Server
+- Amin Nusi 23.66.0033 (Anggota) - Konfigurasi database server
 
 Cowrie adalah salah satu proyek open-source yang bertujuan untuk meniru layanan Secure Shell (SSH) dan bertindak sebagai honeypot. Honeypot adalah sistem atau perangkat lunak yang dirancang untuk menarik dan menangkap serangan siber dengan cara meniru sebagai target yang mudah diserang. Cowrie digunakan khusus untuk menarik serangan terhadap layanan SSH.
 
@@ -159,6 +160,51 @@ lalu ping domain
 ```sh
 ping www.amikomspj.com
 ping www.dilarang.net
-``` 
+```
+# 5 Penginstalan apk database
+'''sh
+apt install phpmyadmin mariadb-server php-mysql php-json php-mbstring php-zip php-gd php-xml php-curl
+'''
+### 5.1 Penginstalan Mysql (mariadb)
+'''sh
+mysql_secure_instalation
+'''
+### 5.2 Masuk ke konsol mysql
+'''sh
+mysql -u root -p
+'''
+### 5.3 Membuat database
+'''sh
+create database ung;
+'''
+### 5.4 Cara melihat database yang sudah dibuat
+'''sh
+show databases;
+'''
+### 5.5 Membuat user
+'''sh
+create user 'ung'@'localhost' identified by '1';
+'''
+### 5.6 Membuat privilage atau akses agar user ung hanya bisa mengakses database ung saja
+'''sh
+ grant all privileges on tkj.sql to 'ung'@'localhost';
+ '''
+ ### 5.7 Setelah kita memberikan akses kita harus memasukan perintah lagi atau mengaktifkan konfigurasi yang ada di dalamnya
+ '''sh
+ flush privileges;
+ '''
+ ### 5.8 keluar dari konsol mysql
+ '''sh
+ quit
+ '''
+ ### cara mengujinya
+ '''sh
+ buka google chrome lalu ketik www.amikomspj.com/phpmyadmin
+ '''
+
+
+
+
+
 
 
