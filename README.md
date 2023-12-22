@@ -3,7 +3,8 @@ LIST NAMA ANGGOTA KELOMPOK
 - Mohamad Farhan Palilati 23.66.0020 (Ketua) - System Security Administrator
 - Siti Marwa 23.66.0024 (Anggota) - Network Administrator
 - Moh Wahyu A.Saini 23.66.0034 (Anggota) - Konfigurasi DNS Server
-- Amin Nusi 23.66.0033 (Anggota) - Konfigurasi database server
+- Ilun Nambo 23.66.0032 (Anggota) - Konfigurasi Web Server
+- Amin Nusi 23.66.0033 (Anggota) - Konfigurasi Database server
 
 Cowrie adalah salah satu proyek open-source yang bertujuan untuk meniru layanan Secure Shell (SSH) dan bertindak sebagai honeypot. Honeypot adalah sistem atau perangkat lunak yang dirancang untuk menarik dan menangkap serangan siber dengan cara meniru sebagai target yang mudah diserang. Cowrie digunakan khusus untuk menarik serangan terhadap layanan SSH.
 
@@ -161,39 +162,189 @@ lalu ping domain
 ping www.amikomspj.com
 ping www.dilarang.net
 ```
-# 5 Penginstalan apk database
+# 5 Konfigurasi Web Server
+### 5.1 Pertama-tama menginstal paket web server dengan command
+```sh
+apt install apache2 -y
+```
+kemudian tekan ENTER.
+### 5.2 Setelah terinstall, selanjutnya mengedit file konfigurasi apache2 pada folder
+```sh
+cd /etc/apache2/sites-available
+```
+kemudian ENTER, lalu ketik command:
+```sh
+ls
+```
+maka, akan muncul dua file, yaitu:
+```sh
+000-default.conf (http)
+default-ssl.conf (https)
+```
+Karena kami hanya ingin membuat website yang berbasis http, maka kami menggunakan file 000-default.conf.
+### 5.3 Membuat webiste berbasis http
+Karena yang akan kami buat website berbasis http, maka masukkan command:
+```sh
+cp 000-default.conf amikomspj.conf
+cp 000-default.conf dilarang.conf
+```
+Setelah itu, mengedit satu persatu websitenya dengan command:
+```sh
+nano amikomspj.conf
+```
+lalu tekan ENTER, setelah muncul jendela konfigurasinya servername diubah menjadi nama websitenya, begitupun pada ServerAdmin-nya dan DokumenRoot-nya menjadi:
+```sh
+ServerName www.amikomspj.com
+
+ServerAdmin webmaster@amikomspj
+DocumentRoot /var/www/amikomspj
+```
+lalu tekan CTRL+O > ENTER > CTRL+X
+
+Kemudian mengedit website berikutnya, yakni dilarang.net yang diawali dengan command:
+```sh
+nano dilarang.conf
+```
+selanjutnya, ENTER. 
+Setelah muncul jendela konfigurasinya, servername diubah menjadi nama websitenya, begitupun pada ServerAdmin-nya dan DokumenRoot-nya menjadi:
+```sh
+ServerName www.dilarang.net
+
+ServerAdmin webmaster@dilarang
+DocumentRoot /var/www/dilarang
+```
+lalu tekan CTRL+O > ENTER > CTRL+X
+Setelah dikonfigurasi, beralih ke DokumenRoot-nya
+### 5.4 Membuat folder di folder /var/www
+Masukkan command:
+```sh
+cd /var/www
+```
+lalu ENTER, kemudian masukkan command:
+```sh
+ls
+```
+untuk melihat folder yang sudah ada.
+Selanjutnya membuat direktori dengan command:
+```sh
+mkdir amikomspj dilarang
+```
+selanjutnya, mengganti hak akses direktori yang dibuat tadi menjadi full access (bisa dibaca, ditulis dan dieksekusi) dengan command:
+```sh
+chmod -R 777 amikomspj dilarang
+```
+lalu ENTER, maka dengan itu direktori menjadi full access.
+### 5.5 Membuat halaman Website menggunakan bahasa pemrograman html yang sederhana pada direktori amikomspj dan juga dilarang
+Pertama masuk pada folder amikomspj dengan command:
+```sh
+cd amikomspj
+```
+kemudian membuat halaman websitenya dengan command:
+```sh
+nano index.html
+```
+lalu ENTER.
+Kemudian membuat halaman website sederhana seperti berikut:
+```sh
+<html>
+<head>
+      <title>Amikom SPJ</title>
+</head>
+<body>
+      <h1>Amikom SPJ</h1>
+Selamat datang di website Amikom SPJ.
+</body>
+</html>
+```
+kemudian tekan CTRL+O > ENTER > CTRL+X.
+Selanjutnya copy file html yang diedit di folder amikomspj ke folder dilarang dengan command:
+```sh
+cp index.html /var/www/dilarang/index.html
+```
+lalu ENTER, selanjutnya masuk ke folder dilarang dengan command:
+```sh
+cd /var/www/dilarang
+```
+setelah masuk, maka lakukan edit dengan masuk ke:
+```sh
+nano index.html
+```
+selanjutnya mengeditnya menjadi:
+```sh
+<html>
+<head>
+      <title>Situs Terlarang</title>
+</head>
+<body>
+      <h1>Mohon maaf, situs ini tidak dapat diakses!</h1>
+Jangan panik, situs ini hanya bisa diakses oleh mahasiswa Amikom SPJ.
+</body>
+</html>
+```
+kemudian tekan CTRL+O > ENTER > CTRL+X.
+### 5.6 Melakukan Enablesites pada webserver yang telah dikonfigurasi
+Commandnya adalah:
+```sh
+a2ensite amikomspj.conf dilarang.conf
+```
+atau apabila command diatas tidak berfungsi, maka masukkan command berikut:
+```sh
+/usr/sbin/a2ensite amikomspj.conf dilarang.conf
+```
+lalu ENTER. Setelah itu akan muncul status 
+Enabling site amikomspj.
+Enabling site dilarang.
+Maka, akan diperintahkan untuk me-reload apache2 dengan command:
+```sh
+systemctl reload apache2
+```
+ENTER, setelah itu me-restart dengan command:
+```sh
+systemctl restart apache2
+```
+lalu ENTER.
+### 5.7 Pengujian pada website yang telah dibuat 
+Buka web browser dan harus incognito/mode samaran, dengan mengakses:
+```sh
+www.amikomspj.com
+```
+```sh
+www.dilarang.net
+```
+jika tidak berhasil, maka harus mengganti nama domainnya pada konfigurasi DNS Server dan dicoba kembali.
+# 6 Penginstalan apk database
 ```sh
 apt install phpmyadmin mariadb-server php-mysql php-json php-mbstring php-zip php-gd php-xml php-curl
 ```
-### 5.1 Penginstalan Mysql (mariadb)
+### 6.1 Penginstalan Mysql (mariadb)
 ```sh
 mysql_secure_instalation
 ```
-### 5.2 Masuk ke konsol mysql
+### 6.2 Masuk ke konsol mysql
 ```sh
 mysql -u root -p
 ```
-### 5.3 Membuat database
+### 6.3 Membuat database
 ```sh
 create database ung;
 ```
-### 5.4 Cara melihat database yang sudah dibuat
+### 6.4 Cara melihat database yang sudah dibuat
 ```sh
 show databases;
 ```
-### 5.5 Membuat user
+### 6.5 Membuat user
 ```sh
 create user 'ung'@'localhost' identified by '1';
 ```
-### 5.6 Membuat privilage atau akses agar user ung hanya bisa mengakses database ung saja
+### 6.6 Membuat privilage atau akses agar user ung hanya bisa mengakses database ung saja
 ```sh
  grant all privileges on tkj.sql to 'ung'@'localhost';
 ```
- ### 5.7 Setelah kita memberikan akses kita harus memasukan perintah lagi atau mengaktifkan konfigurasi yang ada di dalamnya
+ ### 6.7 Setelah kita memberikan akses kita harus memasukan perintah lagi atau mengaktifkan konfigurasi yang ada di dalamnya
 ```sh
  flush privileges;
 ```
- ### 5.8 keluar dari konsol mysql
+ ### 6.8 keluar dari konsol mysql
 ```sh
  quit
 ```
