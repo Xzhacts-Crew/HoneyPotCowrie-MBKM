@@ -162,45 +162,46 @@ ping www.amikomspj.com
 ping www.dilarang.net
 ```
 # 5 Penginstalan apk database
-'''sh
+```sh
 apt install phpmyadmin mariadb-server php-mysql php-json php-mbstring php-zip php-gd php-xml php-curl
-'''
+```
 ### 5.1 Penginstalan Mysql (mariadb)
-'''sh
+```sh
 mysql_secure_instalation
-'''
+```
 ### 5.2 Masuk ke konsol mysql
-'''sh
+```sh
 mysql -u root -p
-'''
+```
 ### 5.3 Membuat database
-'''sh
+```sh
 create database ung;
-'''
+```
 ### 5.4 Cara melihat database yang sudah dibuat
-'''sh
+```sh
 show databases;
-'''
+```
 ### 5.5 Membuat user
-'''sh
+```sh
 create user 'ung'@'localhost' identified by '1';
-'''
+```
 ### 5.6 Membuat privilage atau akses agar user ung hanya bisa mengakses database ung saja
-'''sh
+```sh
  grant all privileges on tkj.sql to 'ung'@'localhost';
- '''
+```
  ### 5.7 Setelah kita memberikan akses kita harus memasukan perintah lagi atau mengaktifkan konfigurasi yang ada di dalamnya
- '''sh
+```sh
  flush privileges;
- '''
+```
  ### 5.8 keluar dari konsol mysql
- '''sh
+```sh
  quit
- '''
+```
  ### cara mengujinya
- '''sh
+```sh
  buka google chrome lalu ketik www.amikomspj.com/phpmyadmin
- '''
+```
+
 
 
 
